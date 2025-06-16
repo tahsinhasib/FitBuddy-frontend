@@ -11,6 +11,10 @@ import {
   Utensils,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import UserMetricsDashboard from '@/components/Dashboard/UserMetricsDashboard';
+import UserMetricsChart from '@/components/Dashboard/UserMetricsChart';
+import UserMetricsTabs from '@/components/Dashboard/UserMetricsTabs';
+import MetricsChartTabs from '@/components/Dashboard/MetricsChartsTabs';
 
 interface User {
   id: number;
@@ -54,7 +58,14 @@ export default function UserDashboard() {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <h1 className="text-3xl font-bold">Dashboard</h1>;
+  return (
+    <div className="space-y-8">
+      <UserMetricsDashboard />
+      {/* <UserMetricsChart /> */}
+      {/* <UserMetricsTabs /> */}
+      <MetricsChartTabs />
+    </div>
+  );
       case 'profile':
         return <h1 className="text-3xl font-bold">Profile</h1>;
       case 'messages':
