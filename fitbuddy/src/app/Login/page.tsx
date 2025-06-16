@@ -6,10 +6,12 @@ import { useRouter } from 'next/navigation';
 import { FaFacebookF } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { FaApple } from 'react-icons/fa';
-import Footer from '@/components/HomePage/Footer';
 import Navbar from '@/components/HomePage/Navbar';
+import ModalAlert from '@/components/Login/Modals/ModalAlert';
+import Footer from '@/components/HomePage/Footer';
 
-import ModalAlert from '@/components/Login/Modals/ModalAlert'; // adjust path if needed
+
+
 
 
 
@@ -29,51 +31,51 @@ export default function Login() {
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const data = { email, password };
+  e.preventDefault();
+  const data = { email, password };
 
-        try {
-            const response = await axios.post('http://localhost:3000/auth/login', data);
+  try {
+    const response = await axios.post('http://localhost:3000/auth/login', data);
 
-            const { access_token, user } = response.data;
+    const { access_token, user } = response.data;
 
-            // Save token if needed (optional)
-            localStorage.setItem('token', access_token);
+    // Save token if needed (optional)
+    localStorage.setItem('token', access_token);
 
-            setAlert({
-                type: 'success',
-                message: 'Login Successful!',
-                subMessage: `Welcome ${user.role}. Redirecting to your dashboard...`,
-            });
+    setAlert({
+      type: 'success',
+      message: 'Login Successful!',
+      subMessage: `Welcome ${user.role}. Redirecting to your dashboard...`,
+    });
 
-            setTimeout(() => {
-                // Redirect based on role
-                switch (user.role) {
-                    case 'admin':
-                        router.push('/dashboard/admin');
-                        break;
-                    case 'trainer':
-                        router.push('/dashboard/user');
-                        break;
-                    case 'nutritionist':
-                        router.push('/dashboard/nutritionist');
-                        break;
-                    default:
-                        router.push('/dashboard/user');
-                }
-            }, 2000);
-        } catch (error) {
-            setAlert({
-                type: 'error',
-                message: 'Login Failed',
-                subMessage: 'Invalid credentials. Please try again.',
-            });
+    setTimeout(() => {
+      // Redirect based on role
+      switch (user.role) {
+        case 'user':
+          window.location.href = '/Dashboard/User'; // hard reload
+          break;
+        case 'trainer':
+          window.location.href = '/Dashboard/User'; // hard reload
+          break;
+        case 'nutritionist':
+          
+          break;
+        default:
+          window.location.href = '/Dashboard/User'; // hard reload
+      }
+    }, 2000);
+  } catch (error) {
+    setAlert({
+      type: 'error',
+      message: 'Login Failed',
+      subMessage: 'Invalid credentials. Please try again.',
+    });
 
-            setTimeout(() => {
-                setAlert(null);
-            }, 3000);
-        }
-    };
+    setTimeout(() => {
+      setAlert(null);
+    }, 3000);
+  }
+};
 
 
 
@@ -102,6 +104,10 @@ export default function Login() {
                         />
                     )}
 
+
+        
+
+                    
 
                     <form className="space-y-5 pt-6" onSubmit={handleSubmit}>
                         <div>

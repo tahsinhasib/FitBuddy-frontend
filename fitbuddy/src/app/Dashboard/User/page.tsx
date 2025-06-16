@@ -1,7 +1,142 @@
-import React from 'react'
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {
+  Dumbbell, Home, LayoutDashboard, LogOut,
+  MessageSquare, Salad, User, Utensils
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'user' | 'trainer' | 'nutritionist' | 'admin';
+  profileImage?: string;
+}
 
 export default function UserDashboard() {
+  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [user, setUser] = useState<User | null>(null);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        router.push('/Login');
+        return;
+      }
+
+      try {
+        const response = await axios.get('http://localhost:3000/auth/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUser(response.data);
+      } catch (err) {
+        console.error('Failed to fetch user:', err);
+        router.push('/Login');
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <h1 className="text-3xl font-bold">Dashboard</h1>;
+      case 'profile':
+        return <h1 className="text-3xl font-bold">Profile</h1>;
+      case 'messages':
+        return <h1 className="text-3xl font-bold">Messages</h1>;
+      case 'workouts':
+        return <h1 className="text-3xl font-bold">Workouts</h1>;
+      case 'nutrition':
+        return <h1 className="text-3xl font-bold">Nutrition</h1>;
+      case 'trainer':
+        return <h1 className="text-3xl font-bold">Clients</h1>;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div>UserDashboard</div>
-  )
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <aside className="w-64 h-full bg-white shadow-md p-6 fixed top-0 left-0 hidden md:block">
+        <h2 className="text-2xl font-bold mb-4 text-indigo-600">Fitness App</h2>
+
+        {user && (
+          <div className="flex items-center space-x-3 mb-6">
+            <img
+              src={user.profileImage || '/default-avatar.png'}
+              alt="User"
+              className="w-10 h-10 rounded-full border"
+            />
+            <div>
+              <p className="text-sm font-medium text-gray-800">{user.name}</p>
+              <p className="text-xs text-gray-500">{user.email}</p>
+            </div>
+          </div>
+        )}
+
+        <nav className="flex flex-col space-y-3 text-gray-700">
+          {[
+            { label: 'Dashboard', tab: 'dashboard', icon: <LayoutDashboard className="w-5 h-5" /> },
+            { label: 'Profile', tab: 'profile', icon: <User className="w-5 h-5" /> },
+            { label: 'Messages', tab: 'messages', icon: <MessageSquare className="w-5 h-5" /> },
+            { label: 'Workouts', tab: 'workouts', icon: <Dumbbell className="w-5 h-5" /> },
+            { label: 'Nutrition', tab: 'nutrition', icon: <Utensils className="w-5 h-5" /> },
+          ].map((item) => (
+            <button
+              key={item.label}
+              onClick={() => setActiveTab(item.tab)}
+              className={`flex items-center gap-x-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-indigo-600 hover:text-white transition duration-200 font-medium shadow-sm text-left ${
+                activeTab === item.tab ? 'bg-indigo-100' : ''
+              }`}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </button>
+          ))}
+
+          {/* Trainer only */}
+          {user?.role === 'trainer' && (
+            <button
+              onClick={() => setActiveTab('trainer')}
+              className={`flex items-center gap-x-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-indigo-600 hover:text-white transition duration-200 font-medium shadow-sm text-left ${
+                activeTab === 'trainer' ? 'bg-indigo-100' : ''
+              }`}
+            >
+              <User className="w-5 h-5" />
+              <span>Clients</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => {
+              localStorage.removeItem('token');
+              router.push('/Login');
+            }}
+            className="flex items-center gap-x-3 mt-auto px-4 py-2 border border-red-300 rounded-lg text-red-600 hover:bg-red-50 transition duration-200 font-medium shadow-sm text-left"
+          >
+            <LogOut className="w-5 h-5" />
+            <span>Logout</span>
+          </button>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="ml-0 md:ml-64 w-full overflow-y-auto p-10 space-y-8 h-screen pb-24 md:pb-10">
+        {renderContent()}
+      </main>
+    </div>
+  );
 }
