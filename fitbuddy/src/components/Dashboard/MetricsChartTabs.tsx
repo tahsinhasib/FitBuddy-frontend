@@ -13,7 +13,7 @@ import {
 import { Line, Bar } from 'react-chartjs-2';
 import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { FaWeight, FaHeartbeat, FaFireAlt, FaTint, FaBalanceScale, FaFilePdf } from 'react-icons/fa';
+import { FaWeight, FaHeartbeat, FaFireAlt, FaTint, FaBalanceScale, FaFilePdf, FaTachometerAlt } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 
 ChartJS.register(
@@ -32,14 +32,28 @@ interface Metric {
   caloriesBurned?: number;
   bmi?: number;
   waterIntake?: number;
+  bloodPressureSystolic?: number;
+  bloodPressureDiastolic?: number;
+  bodyFatPercentage?: number;
+  muscleMass?: number;
   recordedAt: string;
 }
+
 
 export default function MetricsChartTabs() {
   const [metrics, setMetrics] = useState<Metric[]>([]);
   const [activeTab, setActiveTab] = useState<
-    'weight' | 'heartRate' | 'caloriesBurned' | 'bmi' | 'waterIntake'
-  >('weight');
+  | 'weight'
+  | 'heartRate'
+  | 'caloriesBurned'
+  | 'bmi'
+  | 'waterIntake'
+  | 'bloodPressureSystolic'
+  | 'bloodPressureDiastolic'
+  | 'bodyFatPercentage'
+  | 'muscleMass'
+>('weight');
+
 
   // Ref to the chart instance
   const chartRef = useRef<any>(null);
@@ -159,6 +173,47 @@ export default function MetricsChartTabs() {
         >
           <FaTint /> Water Intake (L)
         </button>
+        <button
+  onClick={() => setActiveTab('bloodPressureSystolic')}
+  className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
+    activeTab === 'bloodPressureSystolic'
+      ? 'bg-yellow-500 text-white'
+      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+  }`}
+>
+  <FaTachometerAlt /> BP Systolic
+</button>
+<button
+  onClick={() => setActiveTab('bloodPressureDiastolic')}
+  className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
+    activeTab === 'bloodPressureDiastolic'
+      ? 'bg-yellow-600 text-white'
+      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+  }`}
+>
+  <FaTachometerAlt /> BP Diastolic
+</button>
+<button
+  onClick={() => setActiveTab('bodyFatPercentage')}
+  className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
+    activeTab === 'bodyFatPercentage'
+      ? 'bg-pink-600 text-white'
+      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+  }`}
+>
+  <FaBalanceScale /> Body Fat %
+</button>
+<button
+  onClick={() => setActiveTab('muscleMass')}
+  className={`flex items-center gap-2 px-4 py-2 rounded-md transition ${
+    activeTab === 'muscleMass'
+      ? 'bg-green-700 text-white'
+      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+  }`}
+>
+  <FaBalanceScale /> Muscle Mass
+</button>
+
       </div>
 
       <div className="w-full">
@@ -177,6 +232,31 @@ export default function MetricsChartTabs() {
         {activeTab === 'waterIntake' && (
           <Bar ref={chartRef} data={formatData('waterIntake', 'Water Intake (liters)', '#2563eb')} />
         )}
+        {activeTab === 'bloodPressureSystolic' && (
+  <Line
+    ref={chartRef}
+    data={formatData('bloodPressureSystolic', 'Systolic BP (mmHg)', '#facc15')}
+  />
+)}
+{activeTab === 'bloodPressureDiastolic' && (
+  <Line
+    ref={chartRef}
+    data={formatData('bloodPressureDiastolic', 'Diastolic BP (mmHg)', '#eab308')}
+  />
+)}
+{activeTab === 'bodyFatPercentage' && (
+  <Line
+    ref={chartRef}
+    data={formatData('bodyFatPercentage', 'Body Fat (%)', '#db2777')}
+  />
+)}
+{activeTab === 'muscleMass' && (
+  <Line
+    ref={chartRef}
+    data={formatData('muscleMass', 'Muscle Mass (kg)', '#15803d')}
+  />
+)}
+
       </div>
     </div>
   );

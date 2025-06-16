@@ -77,13 +77,13 @@ export default function UserMetricsDashboard() {
     },
     { label: 'Calories Burned', value: metrics.caloriesBurned, icon: <FaFireAlt className="text-orange-400" /> },
     { label: 'Water Intake (L)', value: metrics.waterIntake, icon: <GiWaterBottle className="text-blue-400" /> },
-    { label: 'Note', value: metrics.note, icon: <FaRegStickyNote className="text-gray-500" /> },
+    // { label: 'Note', value: metrics.note, icon: <FaRegStickyNote className="text-gray-500" /> },
   ];
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-indigo-600">Your Latest Health Metrics</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-10 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-9 gap-6">
         {metricCards.map(
           (item) =>
             item.value !== undefined &&
