@@ -124,11 +124,28 @@ export default function UserDashboard() {
 
                 {user && (
                     <div className="flex items-center space-x-3 mb-6">
-                        <img
-                            src={user.profileImage || '/default-avatar.png'}
-                            alt="User"
-                            className="w-10 h-10 rounded-full border"
-                        />
+                        {user.profileImage ? (
+    <img
+        src={user.profileImage}
+        alt="User"
+        className="w-10 h-10 rounded-full border"
+    />
+) : (
+    <div className="avatar placeholder">
+        <div className="bg-neutral text-neutral-content w-10 h-10 rounded-full flex items-center justify-center text-center p-2">
+            <span className="text-sm font-semibold">
+                {user.name
+                    .split(' ')
+                    .map((n) => n[0])
+                    .join('')
+                    .toUpperCase()
+                    .slice(0, 2)}
+            </span>
+        </div>
+    </div>
+)}
+
+
                         <div>
                             <p className="text-sm font-medium text-gray-800">{user.name}</p>
                             <p className="text-xs text-gray-500">{user.email}</p>
@@ -163,7 +180,7 @@ export default function UserDashboard() {
             </aside>
 
             {/* Scrollable Main Content */}
-            <main className="flex-1 ml-0 md:ml-64 overflow-y-auto h-screen p-6 pb-24 md:pb-10">
+            <main className="flex-1 ml-0 md:ml-64 overflow-y-auto h-screen p-6 pb-24 md:pb-10 bg-white">
                 {renderContent()}
             </main>
 

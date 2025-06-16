@@ -31,51 +31,50 @@ export default function Login() {
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  const data = { email, password };
+        e.preventDefault();
+        const data = { email, password };
 
-  try {
-    const response = await axios.post('http://localhost:3000/auth/login', data);
+        try {
+            const response = await axios.post('http://localhost:3000/auth/login', data);
 
-    const { access_token, user } = response.data;
+            const { access_token, user } = response.data;
 
-    // Save token if needed (optional)
-    localStorage.setItem('token', access_token);
+            // Save token if needed (optional)
+            localStorage.setItem('token', access_token);
 
-    setAlert({
-      type: 'success',
-      message: 'Login Successful!',
-      subMessage: `Welcome ${user.role}. Redirecting to your dashboard...`,
-    });
+            setAlert({
+                type: 'success',
+                message: 'Login Successful!',
+                subMessage: `Welcome ${user.role}. Redirecting to your dashboard...`,
+            });
 
-    setTimeout(() => {
-      // Redirect based on role
-      switch (user.role) {
-        case 'user':
-          window.location.href = '/Dashboard/User'; // hard reload
-          break;
-        case 'trainer':
-          window.location.href = '/Dashboard/User'; // hard reload
-          break;
-        case 'nutritionist':
-          
-          break;
-        default:
-          window.location.href = '/Dashboard/User'; // hard reload
-      }
-    }, 2000);
-  } catch (error) {
-    setAlert({
-      type: 'error',
-      message: 'Login Failed',
-      subMessage: 'Invalid credentials. Please try again.',
-    });
+            setTimeout(() => {
+                // Redirect based on role
+                switch (user.role) {
+                    case 'user':
+                        window.location.href = '/Dashboard/User'; // hard reload
+                        break;
+                    case 'trainer':
+                        window.location.href = '/Dashboard/User'; // hard reload
+                        break;
+                    case 'nutritionist':
+                        break;
+                    default:
+                        window.location.href = '/Dashboard/User'; // hard reload
+                }
+            }, 2000);
+        } catch (error) {
+            setAlert({
+                type: 'error',
+                message: 'Login Failed',
+                subMessage: 'Invalid credentials. Please try again.',
+            });
 
-    setTimeout(() => {
-      setAlert(null);
-    }, 3000);
-  }
-};
+            setTimeout(() => {
+                setAlert(null);
+            }, 3000);
+        }
+    };
 
 
 
@@ -105,9 +104,9 @@ export default function Login() {
                     )}
 
 
-        
 
-                    
+
+
 
                     <form className="space-y-5 pt-6" onSubmit={handleSubmit}>
                         <div>

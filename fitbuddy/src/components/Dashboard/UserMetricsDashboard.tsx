@@ -102,7 +102,7 @@ export default function UserMetricsDashboard() {
         )}
       </div>
       <p className="text-sm text-gray-400">
-        Recorded At: {new Date(metrics.recordedAt).toLocaleString()}
+        Last recorded at: {new Date(metrics.recordedAt).toLocaleString()}
       </p>
     </div>
   );

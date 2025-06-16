@@ -111,7 +111,7 @@ export default function MetricsChartTabs() {
 
   return (
     <div className="bg-white rounded-xl shadow p-6 w-full">
-      <h2 className="text-xl font-semibold mb-4 flex items-center justify-between">
+      <h2 className="text-xl text-black font-semibold mb-4 flex items-center justify-between">
         Your Metrics Over Time
         <button
           onClick={exportPdf}
