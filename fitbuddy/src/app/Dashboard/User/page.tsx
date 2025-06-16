@@ -16,6 +16,7 @@ import UserMetricsChart from '@/components/Dashboard/UserMetricsChart';
 import UserMetricsTabs from '@/components/Dashboard/UserMetricsTabs';
 import MetricsChartTabs from '@/components/Dashboard/MetricsChartTabs';
 import MetricChangesCard from '@/components/Dashboard/MetricsChangedCard';
+import TrainersYouMayKnow from '@/components/Trainers/TrainersYouMayKnow';
 
 interface User {
     id: number;
@@ -90,7 +91,9 @@ export default function UserDashboard() {
             case 'nutrition':
                 return <h1 className="text-3xl font-bold">Nutrition</h1>;
             case 'user':
-                return <h1 className="text-3xl font-bold">Find Trainers</h1>;
+                return (
+<TrainersYouMayKnow />
+                );
             case 'trainer':
                 return <h1 className="text-3xl font-bold">Clients</h1>;
             default:
