@@ -135,7 +135,7 @@ export default function UserDashboard() {
     />
 ) : (
     <div className="avatar placeholder">
-        <div className="bg-neutral text-neutral-content w-10 h-10 rounded-full flex items-center justify-center text-center p-2">
+        <div className="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-center p-2">
             <span className="text-sm font-semibold">
                 {user.name
                     .split(' ')
