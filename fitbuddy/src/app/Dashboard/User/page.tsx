@@ -18,6 +18,7 @@ import MetricsChartTabs from '@/components/Dashboard/MetricsChartTabs';
 import MetricChangesCard from '@/components/Dashboard/MetricsChangedCard';
 import TrainersYouMayKnow from '@/components/Trainers/TrainersYouMayKnow';
 import TrainerRequestsPanel from '@/components/Trainers/TrainerRequestPanel';
+import TrainerClientMetrics from '@/components/Trainers/TrainerClientMetrics';
 
 interface User {
     id: number;
@@ -97,7 +98,10 @@ export default function UserDashboard() {
                 );
             case 'trainer':
                 return (
+                    <>
                     <TrainerRequestsPanel />
+                    <TrainerClientMetrics />
+                    </>
                 )
             default:
                 return null;
