@@ -19,6 +19,7 @@ import MetricChangesCard from '@/components/Dashboard/MetricsChangedCard';
 import TrainersYouMayKnow from '@/components/Trainers/TrainersYouMayKnow';
 import TrainerRequestsPanel from '@/components/Trainers/TrainerRequestPanel';
 import TrainerClientMetrics from '@/components/Trainers/TrainerClientMetrics';
+import ChatApp from '@/components/Messages/ChatApp';
 
 interface User {
     id: number;
@@ -87,7 +88,9 @@ export default function UserDashboard() {
             case 'profile':
                 return <h1 className="text-3xl font-bold">Profile</h1>;
             case 'messages':
-                return <h1 className="text-3xl font-bold">Messages</h1>;
+                return (
+                    <ChatApp />
+                );
             case 'workouts':
                 return <h1 className="text-3xl font-bold">Workouts</h1>;
             case 'nutrition':
