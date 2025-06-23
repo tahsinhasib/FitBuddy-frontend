@@ -8,6 +8,10 @@ import { FcGoogle } from 'react-icons/fc';
 import ModalAlert from '@/components/Login/Modals/ModalAlert';
 import Navbar from '@/components/HomePage/Navbar';
 import Footer from '@/components/HomePage/Footer';
+import FloatingAnimation from '@/components/Login/FloatingAnimation/FloatingAnimation';
+
+
+
 
 export default function Login() {
     const [alert, setAlert] = useState<{
@@ -47,18 +51,19 @@ export default function Login() {
 
     return (
         <>
-        <Navbar />
+            <Navbar />
             <div className="min-h-screen flex flex-col md:flex-row bg-gray-50">
 
                 {/* Left Info Panel */}
-                <div className="w-full md:w-7xl flex items-center justify-center p-10 mt-16 md:mt-0 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-[500px] md:min-h-screen">
+                <div className="w-full md:w-1/2 relative flex items-center justify-center p-10 mt-16 md:mt-0 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-[500px] md:min-h-screen overflow-hidden">
 
-
+                    <FloatingAnimation />
+                    {/* Welcome Text */}
                     <motion.div
                         initial={{ y: 50, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 1, ease: 'easeOut' }}
-                        className="max-w-md text-center"
+                        className="max-w-md text-center z-10"
                     >
                         <h1 className="text-2xl md:text-4xl font-extrabold text-indigo-700 mb-4">Welcome to FitBuddy</h1>
                         <p className="text-lg text-indigo-900">
@@ -74,29 +79,30 @@ export default function Login() {
                     </motion.div>
                 </div>
 
+
                 {/* Right Login Form */}
                 <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 mt-16 md:mt-0">
 
                     <motion.div
-  initial={{ opacity: 0, scale: 0.95 }}
-  animate={{ opacity: 1, scale: 1 }}
-  transition={{ duration: 0.5 }}
-  className="w-full max-w-md bg-white shadow-xl rounded-xl p-8 relative"
->
-  <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Login to FitBuddy</h2>
-  <p className="text-center text-sm text-gray-500 mb-4">Enter your credentials to continue</p>
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-full max-w-md bg-white shadow-xl rounded-xl p-8 relative"
+                    >
+                        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Login to FitBuddy</h2>
+                        <p className="text-center text-sm text-gray-500 mb-4">Enter your credentials to continue</p>
 
-  {/* Modal Alert */}
-  {alert && (
-    <div className="mb-4">
-      <ModalAlert
-        type={alert.type}
-        message={alert.message}
-        subMessage={alert.subMessage}
-        onClose={() => setAlert(null)}
-      />
-    </div>
-  )}
+                        {/* Modal Alert */}
+                        {alert && (
+                            <div className="mb-4">
+                                <ModalAlert
+                                    type={alert.type}
+                                    message={alert.message}
+                                    subMessage={alert.subMessage}
+                                    onClose={() => setAlert(null)}
+                                />
+                            </div>
+                        )}
 
 
                         <form onSubmit={handleSubmit} className="space-y-5">
@@ -153,10 +159,10 @@ export default function Login() {
                     </motion.div>
                 </div>
 
-                
+
             </div>
             <Footer />
-            </>
+        </>
     );
 }
 
