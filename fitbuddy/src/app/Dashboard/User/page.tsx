@@ -20,6 +20,8 @@ import TrainersYouMayKnow from '@/components/Trainers/TrainersYouMayKnow';
 import TrainerRequestsPanel from '@/components/Trainers/TrainerRequestPanel';
 import TrainerClientMetrics from '@/components/Trainers/TrainerClientMetrics';
 import ChatApp from '@/components/Messages/ChatApp';
+import TrainerWorkoutPlans from '@/components/Trainers/TrainerWorkoutPlans';
+import UserWorkoutPlans from '@/components/Clients/UserWorkoutPlans';
 
 interface User {
     id: number;
@@ -92,18 +94,27 @@ export default function UserDashboard() {
                     <ChatApp />
                 );
             case 'workouts':
-                return <h1 className="text-3xl font-bold">Workouts</h1>;
+    if (user?.role === 'trainer') {
+        return <TrainerWorkoutPlans />;
+    } else if (user?.role === 'user') {
+        return <UserWorkoutPlans />;
+    } else if (user?.role === 'nutritionist') {
+        return <></>;
+    } else {
+        return <p className="text-red-600">Unauthorized role</p>;
+    }
+
             case 'nutrition':
                 return <h1 className="text-3xl font-bold">Nutrition</h1>;
             case 'user':
                 return (
-<TrainersYouMayKnow />
+                    <TrainersYouMayKnow />
                 );
             case 'trainer':
                 return (
                     <>
-                    <TrainerRequestsPanel />
-                    <TrainerClientMetrics />
+                        <TrainerRequestsPanel />
+                        <TrainerClientMetrics />
                     </>
                 )
             default:
@@ -135,25 +146,25 @@ export default function UserDashboard() {
                 {user && (
                     <div className="flex items-center space-x-3 mb-6">
                         {user.profileImage ? (
-    <img
-        src={user.profileImage}
-        alt="User"
-        className="w-10 h-10 rounded-full border"
-    />
-) : (
-    <div className="avatar placeholder">
-        <div className="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-center p-2">
-            <span className="text-sm font-semibold">
-                {user.name
-                    .split(' ')
-                    .map((n) => n[0])
-                    .join('')
-                    .toUpperCase()
-                    .slice(0, 2)}
-            </span>
-        </div>
-    </div>
-)}
+                            <img
+                                src={user.profileImage}
+                                alt="User"
+                                className="w-10 h-10 rounded-full border"
+                            />
+                        ) : (
+                            <div className="avatar placeholder">
+                                <div className="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-center p-2">
+                                    <span className="text-sm font-semibold">
+                                        {user.name
+                                            .split(' ')
+                                            .map((n) => n[0])
+                                            .join('')
+                                            .toUpperCase()
+                                            .slice(0, 2)}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
 
 
                         <div>
