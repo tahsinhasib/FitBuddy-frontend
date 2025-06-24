@@ -8,3 +8,4 @@ npm install react-hot-toast
 npm install framer-motion
 npm install date-fns
 npm install date-fns@^2.0.0
+npm install react-calendar-heatmap

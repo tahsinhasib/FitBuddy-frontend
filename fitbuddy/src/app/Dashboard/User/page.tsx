@@ -20,8 +20,10 @@ import TrainersYouMayKnow from '@/components/Trainers/TrainersYouMayKnow';
 import TrainerRequestsPanel from '@/components/Trainers/TrainerRequestPanel';
 import TrainerClientMetrics from '@/components/Trainers/TrainerClientMetrics';
 import ChatApp from '@/components/Messages/ChatApp';
-import TrainerWorkoutPlans from '@/components/Trainers/TrainerWorkoutPlans';
+
 import UserWorkoutPlans from '@/components/Clients/UserWorkoutPlans';
+import TrainerWorkoutPlans from '@/components/WorkoutPlan/TrainerWorkoutPlans';
+import UserMetricsHeatmap from '@/components/Dashboard/UserMetricsHeatmap';
 
 interface User {
     id: number;
@@ -84,7 +86,7 @@ export default function UserDashboard() {
                                 <MetricChangesCard />
                             </div>
                         </div>
-
+                            <UserMetricsHeatmap />
                     </div>
                 );
             case 'profile':
@@ -94,15 +96,17 @@ export default function UserDashboard() {
                     <ChatApp />
                 );
             case 'workouts':
-    if (user?.role === 'trainer') {
-        return <TrainerWorkoutPlans />;
-    } else if (user?.role === 'user') {
-        return <UserWorkoutPlans />;
-    } else if (user?.role === 'nutritionist') {
-        return <></>;
-    } else {
-        return <p className="text-red-600">Unauthorized role</p>;
-    }
+                if (user?.role === 'trainer') {
+                    return (
+                        <TrainerWorkoutPlans />
+                    );
+                } else if (user?.role === 'user') {
+                    return <UserWorkoutPlans />;
+                } else if (user?.role === 'nutritionist') {
+                    return <></>;
+                } else {
+                    return <p className="text-red-600">Unauthorized role</p>;
+                }
 
             case 'nutrition':
                 return <h1 className="text-3xl font-bold">Nutrition</h1>;

@@ -34,3 +34,27 @@ body {
 .animate-floating {
   animation: floating 2s ease-in-out infinite;
 }
+
+
+/* .color-empty {
+  fill: #ebedf0;
+}
+.color-github-1 {
+  fill: #c6e48b;
+}
+.color-github-2 {
+  fill: #7bc96f;
+}
+.color-github-3 {
+  fill: #239a3b;
+}
+.color-github-4 {
+  fill: #196127;
+} */
+
+
+.heatmap-container {
+  max-width: 1800px;
+  transform: scale(0.85);
+  transform-origin: top left;
+}
