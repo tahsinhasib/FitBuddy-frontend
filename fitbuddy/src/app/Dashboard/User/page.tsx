@@ -146,9 +146,9 @@ export default function UserDashboard() {
     }
 
     return (
-        <div className="h-screen overflow-hidden flex bg-gradient-to-br from-yellow-50 to-white dark:from-slate-900 dark:to-slate-800 text-black dark:text-white">
+        <div className="h-screen overflow-hidden flex bg-white dark:bg-slate-800 text-black dark:text-white">
             {/* Fixed Sidebar */}
-            <aside className="hidden md:flex flex-col w-64 bg-gradient-to-b from-yellow-50 to-white dark:from-slate-800 dark:to-slate-900 shadow-xl p-6 fixed top-0 left-0 h-full z-40 border-r border-yellow-100 dark:border-slate-700">
+            <aside className="hidden md:flex flex-col w-64 bg-white dark:bg-slate-900 shadow-xl p-6 fixed top-0 left-0 h-full z-40 border-r border-gray-200 dark:border-slate-700">
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-bold text-indigo-600 dark:text-yellow-400">FitBuddy</h2>
                     <DarkModeToggle />
@@ -184,12 +184,11 @@ export default function UserDashboard() {
                         <button
                             key={item.tab}
                             onClick={() => setActiveTab(item.tab)}
-                            className={`flex items-center gap-x-3 px-4 py-2 rounded-lg text-sm font-medium transition duration-200 shadow-sm border ${
-  activeTab === item.tab
-    ? 'bg-yellow-100 dark:bg-yellow-600 text-yellow-900 dark:text-white border-yellow-300 dark:border-yellow-500'
-    : 'bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-slate-600 hover:bg-yellow-100 hover:text-yellow-900 dark:hover:bg-yellow-700 dark:hover:text-white'
-}`}
-
+                            className={`flex items-center gap-x-3 px-4 py-2 rounded-lg text-sm font-medium transition duration-200 shadow-sm border group
+                                ${activeTab === item.tab
+                                    ? 'bg-slate-800 text-white dark:bg-white dark:text-black border-gray-300 dark:border-gray-200'
+                                    : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-slate-700 hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-black'
+                                }`}
                         >
                             {item.icon}
                             <span>{item.label}</span>

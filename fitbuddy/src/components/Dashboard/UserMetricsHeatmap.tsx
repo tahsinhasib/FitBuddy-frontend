@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
-import { subDays, format } from 'date-fns';
+import { subDays } from 'date-fns';
 import axios from 'axios';
 
 interface HeatmapEntry {
@@ -38,22 +38,24 @@ export default function UserMetricsHeatmap() {
     const endDate = new Date();
 
     return (
-        <div className="p-4">
-            <h2 className="text-xl font-bold mb-4">Your Metric Activity</h2>
-            <div className="max-w-[1200px] scale-[0.9] origin-top-left">
-                <CalendarHeatmap
-                    startDate={startDate}
-                    endDate={endDate}
-                    values={heatmapData}
-                    classForValue={(value) => {
-                        if (!value) return 'color-empty';
-                        return `color-github-${Math.min(value.count, 4)}`;
-                    }}
-                    tooltipDataAttrs={(value): { [key: string]: string } => ({
-                        'data-tip': value?.date ? `Metric recorded on ${value.date}` : '',
-                    })}
-                    showWeekdayLabels={true}
-                />
+        <div className="bg-white dark:bg-slate-900 shadow-md border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+            <h2 className="text-xl font-semibold mb-4 text-black dark:text-white">Your Metric Activity</h2>
+            <div className="overflow-x-auto">
+                <div className="max-w-[1200px] scale-[0.95] origin-top-left">
+                    <CalendarHeatmap
+                        startDate={startDate}
+                        endDate={endDate}
+                        values={heatmapData}
+                        classForValue={(value) => {
+                            if (!value) return 'color-empty';
+                            return `color-github-${Math.min(value.count, 4)}`;
+                        }}
+                        tooltipDataAttrs={(value): { [key: string]: string } => ({
+                            'data-tip': value?.date ? `Metric recorded on ${value.date}` : '',
+                        })}
+                        showWeekdayLabels={true}
+                    />
+                </div>
             </div>
         </div>
     );
