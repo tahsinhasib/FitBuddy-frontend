@@ -9,3 +9,9 @@ npm install framer-motion
 npm install date-fns
 npm install date-fns@^2.0.0
 npm install react-calendar-heatmap
+npm install typewriter-effect
+npm install react-slick slick-carousel
+npm install --save-dev @types/react-slick
+npm install react-intersection-observer
+npm install react-countup
+npm install @heroicons/react
