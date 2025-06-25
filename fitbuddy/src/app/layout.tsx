@@ -32,3 +32,55 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+// 'use client';
+// import "./globals.css";
+
+
+// import { useEffect, useState } from 'react';
+
+
+// export default function RootLayout({
+//     children,
+// }: Readonly<{
+//     children: React.ReactNode;
+// }>) {
+
+// const [isDarkMode, setIsDarkMode] = useState(false);
+
+//   useEffect(() => {
+//     // Check localStorage
+//     const theme = localStorage.getItem('theme');
+//     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+//     if (theme === 'dark' || (!theme && prefersDark)) {
+//       document.documentElement.classList.add('dark');
+//       setIsDarkMode(true);
+//     } else {
+//       document.documentElement.classList.remove('dark');
+//       setIsDarkMode(false);
+//     }
+//   }, []);
+
+//   const toggleTheme = () => {
+//     const isDark = document.documentElement.classList.toggle('dark');
+//     localStorage.setItem('theme', isDark ? 'dark' : 'light');
+//     setIsDarkMode(isDark);
+//   };
+
+
+//     return (
+//         <html lang="en">
+//             <body>
+                
+//                 {children}
+//             </body>
+//         </html>
+//     );
+// }
+
+
+
+
+

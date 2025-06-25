@@ -103,83 +103,90 @@ export default function WorkoutPlanForm({
         </button>
       ) : (
         <>
-          <input
-            type="text"
-            placeholder="Plan Title"
-            className="w-full p-2 border rounded"
-            value={formData.title}
-            onChange={(e) => handleChange('title', e.target.value)}
-          />
-          <textarea
-            placeholder="Description"
-            className="w-full p-2 border rounded"
-            value={formData.description}
-            onChange={(e) => handleChange('description', e.target.value)}
-          />
-          <div className="flex gap-4">
-            <input
-              type="date"
-              className="p-2 border rounded w-full"
-              value={formData.startDate}
-              onChange={(e) => handleChange('startDate', e.target.value)}
-            />
-            <input
-              type="date"
-              className="p-2 border rounded w-full"
-              value={formData.endDate}
-              onChange={(e) => handleChange('endDate', e.target.value)}
-            />
-          </div>
+          {/* Title Input */}
+<input
+  type="text"
+  placeholder="Plan Title"
+  className="w-full p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+  value={formData.title}
+  onChange={(e) => handleChange('title', e.target.value)}
+/>
 
-          <div className="space-y-2">
-            <p className="font-medium">Exercises:</p>
-            {(formData.exercises || []).map((ex, idx) => (
-              <div key={idx} className="grid grid-cols-2 md:grid-cols-5 gap-2 items-center">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="p-2 border rounded"
-                  value={ex.name}
-                  onChange={(e) => handleExerciseChange(idx, 'name', e.target.value)}
-                />
-                <input
-                  type="number"
-                  placeholder="Sets"
-                  className="p-2 border rounded"
-                  value={ex.sets}
-                  onChange={(e) => handleExerciseChange(idx, 'sets', parseInt(e.target.value))}
-                />
-                <input
-                  type="number"
-                  placeholder="Reps"
-                  className="p-2 border rounded"
-                  value={ex.reps}
-                  onChange={(e) => handleExerciseChange(idx, 'reps', parseInt(e.target.value))}
-                />
-                <input
-                  type="text"
-                  placeholder="Rest"
-                  className="p-2 border rounded"
-                  value={ex.rest || ''}
-                  onChange={(e) => handleExerciseChange(idx, 'rest', e.target.value)}
-                />
-                <button
-                  className="text-red-600 text-sm hover:underline"
-                  type="button"
-                  onClick={() => removeExercise(idx)}
-                >
-                  Remove
-                </button>
-              </div>
-            ))}
-            <button
-              type="button"
-              className="text-sm text-blue-600 hover:underline"
-              onClick={addExercise}
-            >
-              + Add Exercise
-            </button>
-          </div>
+{/* Description */}
+<textarea
+  placeholder="Description"
+  className="w-full p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[80px]"
+  value={formData.description}
+  onChange={(e) => handleChange('description', e.target.value)}
+/>
+
+{/* Date Inputs */}
+<div className="flex flex-col md:flex-row gap-4">
+  <input
+    type="date"
+    className="w-full p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+    value={formData.startDate}
+    onChange={(e) => handleChange('startDate', e.target.value)}
+  />
+  <input
+    type="date"
+    className="w-full p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+    value={formData.endDate}
+    onChange={(e) => handleChange('endDate', e.target.value)}
+  />
+</div>
+
+{/* Exercises Section */}
+<div className="space-y-2 mt-4">
+  <p className="font-medium text-black">Exercises:</p>
+  {(formData.exercises || []).map((ex, idx) => (
+    <div key={idx} className="grid grid-cols-2 md:grid-cols-5 gap-2 items-center">
+      <input
+        type="text"
+        placeholder="Name"
+        className="p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+        value={ex.name}
+        onChange={(e) => handleExerciseChange(idx, 'name', e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Sets"
+        className="p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+        value={ex.sets}
+        onChange={(e) => handleExerciseChange(idx, 'sets', parseInt(e.target.value))}
+      />
+      <input
+        type="number"
+        placeholder="Reps"
+        className="p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+        value={ex.reps}
+        onChange={(e) => handleExerciseChange(idx, 'reps', parseInt(e.target.value))}
+      />
+      <input
+        type="text"
+        placeholder="Rest"
+        className="p-2 border border-gray-300 rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[40px]"
+        value={ex.rest || ''}
+        onChange={(e) => handleExerciseChange(idx, 'rest', e.target.value)}
+      />
+      <button
+        className="text-red-600 text-sm hover:underline"
+        type="button"
+        onClick={() => removeExercise(idx)}
+      >
+        Remove
+      </button>
+    </div>
+  ))}
+  <button
+    type="button"
+    className="text-sm text-blue-600 hover:underline"
+    onClick={addExercise}
+  >
+    + Add Exercise
+  </button>
+</div>
+
 
           <div className="flex gap-3">
             <button

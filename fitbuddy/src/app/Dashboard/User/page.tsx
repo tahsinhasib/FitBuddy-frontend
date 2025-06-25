@@ -12,8 +12,6 @@ import {
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import UserMetricsDashboard from '@/components/Dashboard/UserMetricsDashboard';
-import UserMetricsChart from '@/components/Dashboard/UserMetricsChart';
-import UserMetricsTabs from '@/components/Dashboard/UserMetricsTabs';
 import MetricsChartTabs from '@/components/Dashboard/MetricsChartTabs';
 import MetricChangesCard from '@/components/Dashboard/MetricsChangedCard';
 import TrainersYouMayKnow from '@/components/Trainers/TrainersYouMayKnow';
@@ -21,9 +19,11 @@ import TrainerRequestsPanel from '@/components/Trainers/TrainerRequestPanel';
 import TrainerClientMetrics from '@/components/Trainers/TrainerClientMetrics';
 import ChatApp from '@/components/Messages/ChatApp';
 
-import UserWorkoutPlans from '@/components/Clients/UserWorkoutPlans';
+
 import TrainerWorkoutPlans from '@/components/WorkoutPlan/TrainerWorkoutPlans';
 import UserMetricsHeatmap from '@/components/Dashboard/UserMetricsHeatmap';
+
+import ClientWorkoutTab from '@/components/Clients/ClientWorkoutTab';
 
 interface User {
     id: number;
@@ -101,7 +101,9 @@ export default function UserDashboard() {
                         <TrainerWorkoutPlans />
                     );
                 } else if (user?.role === 'user') {
-                    return <UserWorkoutPlans />;
+                    return (
+                        <ClientWorkoutTab />
+                    );
                 } else if (user?.role === 'nutritionist') {
                     return <></>;
                 } else {

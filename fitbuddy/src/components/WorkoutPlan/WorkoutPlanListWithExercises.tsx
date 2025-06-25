@@ -146,7 +146,6 @@ export default function WorkoutPlanProgress({ plans }: Props) {
     <p className="mt-4 text-sm italic text-gray-400">No exercises added for this plan.</p>
   )}
 </div>
-
                                 </div>
                             );
                         })}

@@ -90,7 +90,7 @@ export default function UserMetricsDashboard() {
             item.value !== null && (
               <div
                 key={item.label}
-                className="p-4 bg-white rounded-lg shadow-md border flex items-center gap-4"
+                className="p-4 bg-white rounded-lg shadow-lg border-b-gray-700 flex items-center gap-4"
               >
                 <div className="text-2xl">{item.icon}</div>
                 <div>
