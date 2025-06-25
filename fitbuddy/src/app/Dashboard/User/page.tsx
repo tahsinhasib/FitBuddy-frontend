@@ -24,6 +24,8 @@ import TrainerWorkoutPlans from '@/components/WorkoutPlan/TrainerWorkoutPlans';
 import UserMetricsHeatmap from '@/components/Dashboard/UserMetricsHeatmap';
 
 import ClientWorkoutTab from '@/components/Clients/ClientWorkoutTab';
+import DarkModeToggle from '@/hooks/DarkModeToggle';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface User {
     id: number;
@@ -86,7 +88,7 @@ export default function UserDashboard() {
                                 <MetricChangesCard />
                             </div>
                         </div>
-                            <UserMetricsHeatmap />
+                        <UserMetricsHeatmap />
                     </div>
                 );
             case 'profile':
@@ -144,10 +146,13 @@ export default function UserDashboard() {
     }
 
     return (
-        <div className="h-screen overflow-hidden flex">
-            {/* Fixed Sidebar for Desktop */}
-            <aside className="hidden md:flex flex-col w-64 bg-white shadow-md p-6 fixed top-0 left-0 h-full z-40">
-                <h2 className="text-2xl font-bold mb-4 text-indigo-600">FitBuddy</h2>
+        <div className="h-screen overflow-hidden flex bg-gradient-to-br from-yellow-50 to-white dark:from-slate-900 dark:to-slate-800 text-black dark:text-white">
+            {/* Fixed Sidebar */}
+            <aside className="hidden md:flex flex-col w-64 bg-gradient-to-b from-yellow-50 to-white dark:from-slate-800 dark:to-slate-900 shadow-xl p-6 fixed top-0 left-0 h-full z-40 border-r border-yellow-100 dark:border-slate-700">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold text-indigo-600 dark:text-yellow-400">FitBuddy</h2>
+                    <DarkModeToggle />
+                </div>
 
                 {user && (
                     <div className="flex items-center space-x-3 mb-6">
@@ -158,35 +163,33 @@ export default function UserDashboard() {
                                 className="w-10 h-10 rounded-full border"
                             />
                         ) : (
-                            <div className="avatar placeholder">
-                                <div className="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-center p-2">
-                                    <span className="text-sm font-semibold">
-                                        {user.name
-                                            .split(' ')
-                                            .map((n) => n[0])
-                                            .join('')
-                                            .toUpperCase()
-                                            .slice(0, 2)}
-                                    </span>
-                                </div>
+                            <div className="bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-center font-semibold">
+                                {user.name
+                                    .split(' ')
+                                    .map((n) => n[0])
+                                    .join('')
+                                    .toUpperCase()
+                                    .slice(0, 2)}
                             </div>
                         )}
-
-
                         <div>
-                            <p className="text-sm font-medium text-gray-800">{user.name}</p>
-                            <p className="text-xs text-gray-500">{user.email}</p>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
                         </div>
                     </div>
                 )}
 
-                <nav className="flex flex-col space-y-3 text-gray-700">
+                <nav className="flex flex-col space-y-3">
                     {navItems.map((item) => (
                         <button
                             key={item.tab}
                             onClick={() => setActiveTab(item.tab)}
-                            className={`flex items-center gap-x-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-indigo-600 hover:text-white transition duration-200 font-medium shadow-sm text-left ${activeTab === item.tab ? 'bg-indigo-100' : ''
-                                }`}
+                            className={`flex items-center gap-x-3 px-4 py-2 rounded-lg text-sm font-medium transition duration-200 shadow-sm border ${
+  activeTab === item.tab
+    ? 'bg-yellow-100 dark:bg-yellow-600 text-yellow-900 dark:text-white border-yellow-300 dark:border-yellow-500'
+    : 'bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 border-gray-200 dark:border-slate-600 hover:bg-yellow-100 hover:text-yellow-900 dark:hover:bg-yellow-700 dark:hover:text-white'
+}`}
+
                         >
                             {item.icon}
                             <span>{item.label}</span>
@@ -198,7 +201,7 @@ export default function UserDashboard() {
                             localStorage.removeItem('token');
                             router.push('/Login');
                         }}
-                        className="flex items-center gap-x-3 mt-8 px-4 py-2 border border-red-300 rounded-lg text-red-600 hover:bg-red-50 transition duration-200 font-medium shadow-sm text-left"
+                        className="flex items-center gap-x-3 mt-6 px-4 py-2 rounded-lg text-sm font-medium text-red-600 border border-red-300 hover:bg-red-50 dark:border-red-500 dark:hover:bg-red-900"
                     >
                         <LogOut className="w-5 h-5" />
                         <span>Logout</span>
@@ -206,18 +209,29 @@ export default function UserDashboard() {
                 </nav>
             </aside>
 
-            {/* Scrollable Main Content */}
-            <main className="flex-1 ml-0 md:ml-64 overflow-y-auto h-screen p-6 pb-24 md:pb-10 bg-white">
-                {renderContent()}
+            {/* Main Content */}
+            <main className="flex-1 ml-0 md:ml-64 overflow-y-auto h-screen p-6 md:p-10 pb-24">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeTab}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.4, ease: 'easeInOut' }}
+                    >
+                        {renderContent()}
+                    </motion.div>
+                </AnimatePresence>
             </main>
 
-            {/* Bottom nav for Mobile */}
-            <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t shadow-inner flex justify-around items-center h-16">
+
+            {/* Bottom Nav for Mobile */}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-800 border-t border-gray-200 dark:border-slate-700 shadow-inner flex justify-around items-center h-16">
                 {navItems.map((item) => (
                     <button
                         key={item.tab}
                         onClick={() => setActiveTab(item.tab)}
-                        className={`flex flex-col items-center justify-center ${activeTab === item.tab ? 'text-indigo-600' : 'text-gray-500'
+                        className={`flex flex-col items-center justify-center ${activeTab === item.tab ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-300'
                             }`}
                     >
                         {item.icon}
@@ -237,4 +251,5 @@ export default function UserDashboard() {
             </nav>
         </div>
     );
+
 }
