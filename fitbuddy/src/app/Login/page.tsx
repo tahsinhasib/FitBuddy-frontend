@@ -2,175 +2,193 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import { motion } from 'framer-motion';
 import { FaFacebookF, FaApple } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import ModalAlert from '@/components/Login/Modals/ModalAlert';
 import Navbar from '@/components/HomePage/Navbar';
 import Footer from '@/components/HomePage/Footer';
-import FloatingAnimation from '@/components/Login/FloatingAnimation/FloatingAnimation';
-
-
-
+import { motion } from 'framer-motion';
 
 export default function Login() {
-    const [alert, setAlert] = useState<{
-        type: 'success' | 'error';
-        message: string;
-        subMessage?: string;
-    } | null>(null);
+  const [alert, setAlert] = useState<{
+    type: 'success' | 'error';
+    message: string;
+    subMessage?: string;
+  } | null>(null);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const res = await axios.post('http://localhost:3000/auth/login', { email, password });
-            const { access_token, user } = res.data;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:3000/auth/login', { email, password });
+      const { access_token, user } = res.data;
 
-            localStorage.setItem('token', access_token);
-            setAlert({
-                type: 'success',
-                message: 'Login Successful!',
-                subMessage: `Welcome ${user.role}`,
-            });
+      localStorage.setItem('token', access_token);
+      setAlert({
+        type: 'success',
+        message: 'Login Successful!',
+        subMessage: `Welcome ${user.role}`,
+      });
 
-            setTimeout(() => {
-                window.location.href = '/Dashboard/User';
-            }, 2000);
-        } catch {
-            setAlert({
-                type: 'error',
-                message: 'Login Failed',
-                subMessage: 'Invalid credentials. Please try again.',
-            });
-            setTimeout(() => setAlert(null), 3000);
-        }
-    };
+      setTimeout(() => {
+        window.location.href = '/Dashboard/User';
+      }, 2000);
+    } catch {
+      setAlert({
+        type: 'error',
+        message: 'Login Failed',
+        subMessage: 'Invalid credentials. Please try again.',
+      });
+      setTimeout(() => setAlert(null), 3000);
+    }
+  };
 
-    return (
-        <>
-            <Navbar />
-            <div className="min-h-screen flex flex-col md:flex-row bg-gray-50">
+  const featureTexts = [
+    "Get custom workout routines that align with your personal goals and fitness level.",
+    "Track your health metrics in real-time and visualize your progress clearly.",
+    "Stay connected with certified trainers and receive timely feedback and motivation.",
+    "Never miss a session with smart calendar reminders and consistency analytics.",
+  ];
 
-                {/* Left Info Panel */}
-                <div className="w-full md:w-1/2 relative flex items-center justify-center p-10 mt-16 md:mt-0 bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-[500px] md:min-h-screen overflow-hidden">
+  return (
+    <>
+      <Navbar />
+      <div className="relative isolate bg-gradient-to-b from-yellow-50 to-white dark:from-slate-900 dark:to-slate-800 min-h-screen">
+        {/* Decorative Background */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 -top-20 -z-10 transform-gpu overflow-hidden px-36 blur-3xl"
+        >
+          <div
+            className="mx-auto aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-yellow-400 to-orange-400 opacity-30 dark:from-yellow-600 dark:to-orange-700"
+            style={{
+              clipPath:
+                'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
+            }}
+          />
+        </div>
 
-                    <FloatingAnimation />
-                    {/* Welcome Text */}
-                    <motion.div
-                        initial={{ y: 50, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 1, ease: 'easeOut' }}
-                        className="max-w-md text-center z-10"
-                    >
-                        <h1 className="text-2xl md:text-4xl font-extrabold text-indigo-700 mb-4">Welcome to FitBuddy</h1>
-                        <p className="text-lg text-indigo-900">
-                            Your personalized fitness companion. Track your progress, connect with trainers,
-                            and stay committed to your goals with real-time support.
-                        </p>
-                        <ul className="mt-6 text-sm text-indigo-800 space-y-2 text-left">
-                            <li>💪 Smart workout tracking</li>
-                            <li>📈 Health metrics monitoring</li>
-                            <li>📬 Chat with personal trainers</li>
-                            <li>🧠 Insights on consistency & growth</li>
-                        </ul>
-                    </motion.div>
-                </div>
-
-
-                {/* Right Login Form */}
-                <div className="w-full md:w-1/2 flex items-center justify-center px-6 py-12 mt-16 md:mt-0">
-
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="w-full max-w-md bg-white shadow-xl rounded-xl p-8 relative"
-                    >
-                        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Login to FitBuddy</h2>
-                        <p className="text-center text-sm text-gray-500 mb-4">Enter your credentials to continue</p>
-
-                        {/* Modal Alert */}
-                        {alert && (
-                            <div className="mb-4">
-                                <ModalAlert
-                                    type={alert.type}
-                                    message={alert.message}
-                                    subMessage={alert.subMessage}
-                                    onClose={() => setAlert(null)}
-                                />
-                            </div>
-                        )}
-
-
-                        <form onSubmit={handleSubmit} className="space-y-5">
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Email
-                                </label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Password
-                                </label>
-                                <input
-                                    id="password"
-                                    type="password"
-                                    required
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none"
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold transition"
-                            >
-                                Sign In
-                            </button>
-                        </form>
-
-                        <div className="my-6 flex items-center gap-4">
-                            <hr className="flex-grow border-gray-300" />
-                            <span className="text-sm text-gray-400">OR</span>
-                            <hr className="flex-grow border-gray-300" />
-                        </div>
-
-                        <div className="flex flex-col gap-3">
-                            <SocialButton icon={<FaFacebookF className="text-blue-600" />} label="Continue with Facebook" />
-                            <SocialButton icon={<FcGoogle />} label="Continue with Google" />
-                            <SocialButton icon={<FaApple className="text-black" />} label="Continue with Apple" />
-                        </div>
-
-                        <p className="text-sm text-center text-gray-600 mt-6">
-                            Don’t have an account?{' '}
-                            <a href="#" className="text-indigo-500 hover:underline">Sign up</a>
-                        </p>
-                    </motion.div>
-                </div>
-
-
+        <div className="min-h-screen flex flex-col md:flex-row">
+          {/* Left Panel */}
+          <div className="hidden md:flex w-full md:w-3/5 items-center justify-center px-10 py-24 text-black dark:text-white">
+            <div className="max-w-xl space-y-6 text-center md:text-left">
+              <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">
+                Welcome to <span className="text-yellow-400">FitBuddy</span>
+              </h1>
+              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-200">
+                Your all-in-one platform to elevate your fitness journey. Monitor progress,
+                collaborate with expert trainers, and stay accountable—every step of the way.
+              </p>
+              <div className="space-y-4 mt-6 text-base text-gray-800 dark:text-gray-300">
+                {featureTexts.map((text, index) => (
+                  <motion.p
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.5, duration: 0.6, ease: 'easeOut' }}
+                  >
+                    {text}
+                  </motion.p>
+                ))}
+              </div>
             </div>
-            <Footer />
-        </>
-    );
+          </div>
+
+          {/* Right Panel */}
+          <div className="w-full md:w-2/5 flex items-center justify-center px-6 py-24 bg-white dark:bg-slate-900 border-l md:border-l border-gray-200 dark:border-slate-700">
+            <div className="w-full max-w-md space-y-8">
+              {/* Logo and Heading */}
+              <div className="text-center">
+                <img
+                  alt="FitBuddy"
+                  src="https://fitbuddysupplements.com/wp-content/uploads/2025/02/Untitled-design2.png"
+                  className="mx-auto h-10 w-auto"
+                />
+                <h2 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Sign in to your account
+                </h2>
+              </div>
+
+              {alert && (
+                <ModalAlert
+                  type={alert.type}
+                  message={alert.message}
+                  subMessage={alert.subMessage}
+                  onClose={() => setAlert(null)}
+                />
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-gray-100">
+                    Email address
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="mt-2 block w-full rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-gray-900 dark:text-white outline outline-1 outline-gray-300 dark:outline-gray-600 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-900 dark:text-gray-100">
+                      Password
+                    </label>
+                    <a href="#" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+                      Forgot password?
+                    </a>
+                  </div>
+                  <input
+                    id="password"
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="mt-2 block w-full rounded-md bg-white dark:bg-slate-800 px-3 py-2 text-gray-900 dark:text-white outline outline-1 outline-gray-300 dark:outline-gray-600 placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-indigo-600"
+                >
+                  Sign in
+                </button>
+              </form>
+
+              {/* Social Login */}
+              <div className="space-y-3 text-center">
+                <SocialButton icon={<FaFacebookF className="text-blue-600" />} label="Continue with Facebook" />
+                <SocialButton icon={<FcGoogle />} label="Continue with Google" />
+                <SocialButton icon={<FaApple className="text-black dark:text-white" />} label="Continue with Apple" />
+              </div>
+
+              <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                Don’t have an account?{' '}
+                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+                  Sign up
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 }
 
 function SocialButton({ icon, label }: { icon: React.ReactNode; label: string }) {
-    return (
-        <button className="flex items-center gap-2 w-full px-4 py-2 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition text-sm font-medium text-gray-700">
-            {icon}
-            {label}
-        </button>
-    );
+  return (
+    <button className="flex justify-center items-center gap-2 w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 transition text-sm font-medium text-gray-700 dark:text-gray-200">
+      {icon}
+      <span>{label}</span>
+    </button>
+  );
 }
