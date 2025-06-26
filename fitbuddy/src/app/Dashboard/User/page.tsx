@@ -163,7 +163,7 @@ export default function UserDashboard() {
                                 className="w-10 h-10 rounded-full border"
                             />
                         ) : (
-                            <div className="bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-center font-semibold">
+                            <div className="bg-black text-white w-10 h-10 p-5 rounded-full flex items-center justify-center text-center font-semibold dark:bg-white dark:text-black dark:font-semibold">
                                 {user.name
                                     .split(' ')
                                     .map((n) => n[0])

@@ -8,6 +8,7 @@ import ModalAlert from '@/components/Login/Modals/ModalAlert';
 import Navbar from '@/components/HomePage/Navbar';
 import Footer from '@/components/HomePage/Footer';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function Login() {
   const [alert, setAlert] = useState<{
@@ -171,9 +172,9 @@ export default function Login() {
 
               <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
                 Don’t have an account?{' '}
-                <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+                <Link href="/Register" className="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
                   Sign up
-                </a>
+                </Link>
               </p>
             </div>
           </div>
