@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaFacebookF, FaApple } from 'react-icons/fa';
 import Navbar from '@/components/HomePage/Navbar';
 import Footer from '@/components/HomePage/Footer';
+import { HiUsers } from 'react-icons/hi';
 
 export default function RegisterPage() {
     const router = useRouter();
@@ -64,11 +65,7 @@ export default function RegisterPage() {
                 <div className="flex-1 order-2 lg:order-1 flex items-center justify-center px-6 py-35">
                     <div className="w-full max-w-md space-y-6 bg-white dark:bg-gray-800 p-8 shadow-md rounded-xl">
                         <div className="text-center">
-                            <img
-                                className="mx-auto h-10 w-auto"
-                                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                                alt="FitBuddy"
-                            />
+                            <HiUsers className="mx-auto text-indigo-600 dark:text-indigo-400 text-4xl" />
                             <h2 className="mt-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                 Create a FitBuddy Account
                             </h2>
