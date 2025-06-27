@@ -26,6 +26,8 @@ import UserMetricsHeatmap from '@/components/Dashboard/UserMetricsHeatmap';
 import ClientWorkoutTab from '@/components/Clients/ClientWorkoutTab';
 import DarkModeToggle from '@/hooks/DarkModeToggle';
 import { AnimatePresence, motion } from 'framer-motion';
+import UserProfileCard from '@/components/Profile/UserProfileCard';
+import UserProfilePage from '@/components/Profile/UserProfilePage';
 
 interface User {
     id: number;
@@ -92,7 +94,9 @@ export default function UserDashboard() {
                     </div>
                 );
             case 'profile':
-                return <h1 className="text-3xl font-bold">Profile</h1>;
+                return (
+                    <UserProfilePage />
+                );
             case 'messages':
                 return (
                     <ChatApp />
