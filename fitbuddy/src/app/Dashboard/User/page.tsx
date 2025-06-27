@@ -28,6 +28,7 @@ import DarkModeToggle from '@/hooks/DarkModeToggle';
 import { AnimatePresence, motion } from 'framer-motion';
 import UserProfileCard from '@/components/Profile/UserProfileCard';
 import UserProfilePage from '@/components/Profile/UserProfilePage';
+import UserMetricsForm from '@/components/Dashboard/UserMetricsForm';
 
 interface User {
     id: number;
@@ -73,6 +74,7 @@ export default function UserDashboard() {
             case 'dashboard':
                 return (
                     <div className="space-y-8">
+                        <UserMetricsForm />
                         <UserMetricsDashboard />
 
 
