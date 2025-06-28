@@ -144,6 +144,7 @@ export default function UserDashboard() {
                 return (
                     <>
                         <TrainerRequestsPanel />
+                        <br></br>
                         <TrainerClientMetrics />
                     </>
                 )

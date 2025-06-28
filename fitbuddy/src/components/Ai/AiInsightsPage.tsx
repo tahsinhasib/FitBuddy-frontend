@@ -41,7 +41,7 @@ export default function AiInsightsPage() {
     const latest = metrics[metrics.length - 1];
 
     return (
-        <div className="max-w-3xl mx-auto py-6">
+        <div className="max-w-9xl mx-auto py-6">
             <h2 className="text-2xl font-bold mb-4">AI Health Insights</h2>
             <HealthInsightCard latestMetrics={latest} />
         </div>

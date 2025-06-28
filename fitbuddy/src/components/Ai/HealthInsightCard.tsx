@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Sparkles } from 'lucide-react';
 
 export default function HealthInsightCard({ latestMetrics }: { latestMetrics: any }) {
   const [insight, setInsight] = useState('');
@@ -23,26 +23,38 @@ export default function HealthInsightCard({ latestMetrics }: { latestMetrics: an
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-lg shadow p-4 space-y-4 border border-gray-200 dark:border-slate-700">
-      <h3 className="text-lg font-semibold text-gray-800 dark:text-white">AI-Based Health Insight</h3>
+    <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg border border-gray-200 dark:border-slate-700 p-6 space-y-6">
+      <div className="flex items-center gap-3">
+        <Sparkles className="text-blue-600 dark:text-blue-400" size={24} />
+        <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+          AI-Based Health Insight
+        </h3>
+      </div>
+
+      <p className="text-sm text-gray-600 dark:text-gray-300">
+        Get a personalized summary and recommendations based on your latest health metrics.
+      </p>
 
       <button
         onClick={generateInsight}
         disabled={loading}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 disabled:opacity-60 transition"
       >
         {loading ? (
-          <span className="flex items-center gap-2">
-            <Loader2 className="animate-spin" size={16} />
+          <>
+            <Loader2 className="animate-spin" size={18} />
             Generating...
-          </span>
+          </>
         ) : (
-          'Generate Insight'
+          <>
+            <Sparkles size={18} />
+            Generate Insight
+          </>
         )}
       </button>
 
       {insight && (
-        <div className="bg-gray-100 dark:bg-slate-800 text-gray-800 dark:text-gray-100 p-3 rounded-md whitespace-pre-wrap text-sm leading-relaxed">
+        <div className="bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-600 p-4 rounded-md text-sm text-gray-800 dark:text-gray-100 whitespace-pre-wrap leading-relaxed shadow-inner">
           {insight}
         </div>
       )}

@@ -1,74 +1,170 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Loader2 } from 'lucide-react';
 
+interface Message {
+  role: 'user' | 'assistant';
+  text: string;
+  timestamp: Date;
+}
+
 export default function AIChatComponent() {
-  const [messages, setMessages] = useState<{ role: string; text: string }[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [userName, setUserName] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      try {
+        const res = await axios.get('http://localhost:3000/auth/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUserName(res.data.name);
+      } catch (err) {
+        console.error('Failed to fetch user info:', err);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = input.trim();
-    setMessages([...messages, { role: 'user', text: userMessage }]);
+    setMessages((prev) => [
+      ...prev,
+      { role: 'user', text: userMessage, timestamp: new Date() },
+    ]);
     setInput('');
     setLoading(true);
 
     try {
       const res = await axios.post('http://localhost:3000/ai/chat', {
         message: userMessage,
+        userName,
       });
 
-      setMessages(prev => [...prev, { role: 'assistant', text: res.data.reply }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', text: res.data.reply, timestamp: new Date() },
+      ]);
     } catch (err) {
       console.error(err);
-      setMessages(prev => [...prev, { role: 'assistant', text: '❌ Failed to get reply.' }]);
+      setMessages((prev) => [
+        ...prev,
+        { role: 'assistant', text: '❌ Failed to get reply.', timestamp: new Date() },
+      ]);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="max-w-2xl mx-auto p-6 bg-white dark:bg-slate-900 shadow rounded-lg space-y-4">
-      <h2 className="text-xl font-bold text-gray-800 dark:text-white">Ask Your AI Health Assistant</h2>
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
 
-      <div className="max-h-80 overflow-y-auto border border-gray-300 dark:border-gray-700 p-3 rounded space-y-2 bg-gray-50 dark:bg-slate-800 text-sm">
+  return (
+    <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-slate-900 shadow-lg rounded-xl flex flex-col h-[600px]">
+      <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 select-none">
+        Ask Your AI Health Assistant
+      </h2>
+
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto space-y-4 p-4 rounded border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-slate-800"
+      >
+        {messages.length === 0 && !loading && (
+          <p className="text-gray-400 dark:text-gray-500 italic text-center select-none">
+            Start the conversation by typing your question below...
+          </p>
+        )}
+
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`p-2 rounded ${
-              msg.role === 'user'
-                ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-right'
-                : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100'
+            className={`flex items-end max-w-[80%] ${
+              msg.role === 'user' ? 'ml-auto flex-row-reverse' : 'mr-auto'
             }`}
           >
-            {msg.text}
+            {/* Avatar */}
+            <div
+              className={`flex-shrink-0 rounded-full w-8 h-8 flex items-center justify-center font-bold select-none ${
+                msg.role === 'user'
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200'
+              }`}
+              aria-label={msg.role === 'user' ? 'User avatar' : 'AI assistant avatar'}
+            >
+              {msg.role === 'user' ? (userName ? userName[0].toUpperCase() : 'U') : 'AI'}
+            </div>
+
+            {/* Message bubble */}
+            <div
+              className={`ml-2 p-3 rounded-lg whitespace-pre-wrap text-sm leading-relaxed
+                ${msg.role === 'user'
+                  ? 'bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 rounded-br-none'
+                  : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-bl-none'}
+              `}
+              role="article"
+              aria-live="polite"
+            >
+              {msg.text}
+              <div className="text-xs text-gray-400 dark:text-gray-500 mt-1 text-right select-none">
+                {formatTime(msg.timestamp)}
+              </div>
+            </div>
           </div>
         ))}
+
         {loading && (
-          <div className="text-sm text-gray-500 animate-pulse">AI is typing...</div>
+          <div className="flex items-center text-gray-500 dark:text-gray-400 space-x-2 select-none">
+            <Loader2 className="animate-spin" size={20} />
+            <span>AI is typing...</span>
+          </div>
         )}
       </div>
 
-      <div className="flex items-center gap-2">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          sendMessage();
+        }}
+        className="mt-4 flex gap-3"
+      >
         <input
-          className="flex-1 border px-3 py-2 rounded dark:bg-slate-800 dark:border-slate-700 dark:text-white"
+          type="text"
+          className="flex-grow border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-3 dark:bg-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600"
           placeholder="Ask about health, fitness, diet..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          disabled={loading}
+          aria-label="Message input"
         />
         <button
-          onClick={sendMessage}
-          disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+          type="submit"
+          disabled={loading || input.trim() === ''}
+          className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-semibold transition"
+          aria-label="Send message"
         >
-          {loading ? <Loader2 className="animate-spin" size={16} /> : 'Send'}
+          {loading ? <Loader2 className="animate-spin" size={20} /> : 'Send'}
         </button>
-      </div>
+      </form>
     </div>
   );
 }
