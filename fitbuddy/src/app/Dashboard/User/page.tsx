@@ -30,6 +30,8 @@ import UserProfileCard from '@/components/Profile/UserProfileCard';
 import UserProfilePage from '@/components/Profile/UserProfilePage';
 import UserMetricsForm from '@/components/Dashboard/UserMetricsForm';
 import UserMetricsModal from '@/components/Dashboard/Modals/UserMetricsModal';
+import HealthInsightCard from '@/components/Ai/HealthInsightCard';
+import AiInsightsPage from '@/components/Ai/AiInsightsPage';
 
 interface User {
     id: number;
@@ -126,8 +128,10 @@ export default function UserDashboard() {
                     return <p className="text-red-600">Unauthorized role</p>;
                 }
 
-            case 'nutrition':
-                return <h1 className="text-3xl font-bold">Nutrition</h1>;
+            case 'ai':
+                return (
+                    <AiInsightsPage />
+                );
             case 'user':
                 return (
                     <TrainersYouMayKnow />
@@ -149,7 +153,7 @@ export default function UserDashboard() {
         { label: 'Profile', tab: 'profile', icon: <User className="w-5 h-5" /> },
         { label: 'Messages', tab: 'messages', icon: <MessageSquare className="w-5 h-5" /> },
         { label: 'Workouts', tab: 'workouts', icon: <Dumbbell className="w-5 h-5" /> },
-        { label: 'Nutrition', tab: 'nutrition', icon: <Utensils className="w-5 h-5" /> },
+        { label: 'AI', tab: 'ai', icon: <Utensils className="w-5 h-5" /> },
     ];
 
     if (user?.role === 'trainer') {
