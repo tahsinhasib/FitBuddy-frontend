@@ -21,7 +21,7 @@ export default function ForgotPassword() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
       <Navbar />
-      <div className="flex items-center justify-center py-20 px-4">
+      <div className="flex items-center justify-center py-40 px-2">
         <form onSubmit={handleSubmit} className="w-full max-w-md p-8 rounded-xl bg-white dark:bg-gray-800 shadow">
           <h2 className="text-2xl font-bold mb-4">Forgot Password</h2>
           <label className="block text-sm mb-2">Enter your email</label>
