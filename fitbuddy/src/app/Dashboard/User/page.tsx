@@ -76,28 +76,32 @@ export default function UserDashboard() {
         switch (activeTab) {
             case 'dashboard':
                 return (
-  <div className="space-y-8">
-    <div className="flex justify-end">
-      <button
-        onClick={() => setModalOpen(true)}
-        className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
-      >
-        Add Metrics
-      </button>
-    </div>
-    <UserMetricsModal isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
-    <UserMetricsDashboard />
-    <div className="flex flex-col md:flex-row gap-6">
-      <div className="flex-1">
-        <MetricsChartTabs />
-      </div>
-      <div className="w-full md:max-w-sm">
-        <MetricChangesCard />
-      </div>
-    </div>
-    <UserMetricsHeatmap />
-  </div>
-);
+                    <div className="space-y-8">
+                        <div className="flex justify-between items-center">
+                            <div className="text-3xl font-semibold text-gray-800 dark:text-white">
+                                Welcome, {user?.name?.split(' ')[0] || 'User'}
+                            </div>
+                            <button
+                                onClick={() => setModalOpen(true)}
+                                className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
+                            >
+                                Add Metrics
+                            </button>
+                        </div>
+
+                        <UserMetricsModal isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
+                        <UserMetricsDashboard />
+                        <div className="flex flex-col md:flex-row gap-6">
+                            <div className="flex-1">
+                                <MetricsChartTabs />
+                            </div>
+                            <div className="w-full md:max-w-sm">
+                                <MetricChangesCard />
+                            </div>
+                        </div>
+                        <UserMetricsHeatmap />
+                    </div>
+                );
 
             case 'profile':
                 return (

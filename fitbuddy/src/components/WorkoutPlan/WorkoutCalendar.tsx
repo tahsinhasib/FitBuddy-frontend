@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './CustomCalendar.css'; // We’ll add styles here
+import './CustomCalendar.css';
 
 interface Props {
   plans: any[];

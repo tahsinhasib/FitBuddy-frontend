@@ -1,4 +1,4 @@
-
+/* 
 
 .REACT-CALENDAR {
   width: 100%;
@@ -36,4 +36,75 @@
   background-color: #22c55e !important;
   color: white !important;
   font-weight: bold;
+} */
+
+
+
+/* CustomCalendar.css */
+
+/* Base calendar container */
+.REACT-CALENDAR {
+  width: 100%;
+  background-color: var(--cal-bg);
+  color: var(--cal-text);
+  border-radius: 1rem;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Tile styles */
+.REACT-CALENDAR__tile {
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.REACT-CALENDAR__tile:hover {
+  background-color: var(--cal-hover);
+}
+
+/* Highlight today */
+.today-highlight {
+  background-color: var(--cal-today-bg) !important;
+  color: var(--cal-today-text) !important;
+  font-weight: bold;
+}
+
+/* Highlight selected */
+.selected-date {
+  background-color: var(--cal-selected-bg) !important;
+  color: var(--cal-selected-text) !important;
+}
+
+/* Highlight planned dates */
+.planned-date {
+  background-color: var(--cal-planned-bg);
+  color: var(--cal-planned-text);
+  font-weight: 500;
+}
+
+/* Light mode variables */
+:root {
+  --cal-bg: #ffffff;
+  --cal-text: #1f2937;
+  --cal-hover: #f3f4f6;
+  --cal-today-bg: #e0f2fe;
+  --cal-today-text: #0369a1;
+  --cal-selected-bg: #4f46e5;
+  --cal-selected-text: #ffffff;
+  --cal-planned-bg: #ecfccb;
+  --cal-planned-text: #4d7c0f;
+}
+
+/* Dark mode variables */
+.dark {
+  --cal-bg: #1f2937;
+  --cal-text: #f9fafb;
+  --cal-hover: #374151;
+  --cal-today-bg: #0ea5e9;
+  --cal-today-text: #ffffff;
+  --cal-selected-bg: #6366f1;
+  --cal-selected-text: #ffffff;
+  --cal-planned-bg: #3f6212;
+  --cal-planned-text: #ecfccb;
 }

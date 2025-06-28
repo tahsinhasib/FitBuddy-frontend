@@ -7,8 +7,8 @@ import { subDays } from 'date-fns';
 import axios from 'axios';
 
 interface HeatmapEntry {
-  date: string; // "YYYY-MM-DD"
-  count: number; // e.g. 1
+  date: string;
+  count: number;
 }
 
 interface Props {
@@ -31,9 +31,7 @@ export default function ClientMetricsHeatmap({ clientId, token }: Props) {
       .get(`http://localhost:3000/user-metrics/heatmap/${clientId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .then((res) => {
-        setHeatmapData(res.data);
-      })
+      .then((res) => setHeatmapData(res.data))
       .catch((err) => {
         setError('Failed to load heatmap data');
         console.error(err);
@@ -45,24 +43,26 @@ export default function ClientMetricsHeatmap({ clientId, token }: Props) {
   const endDate = new Date();
 
   if (loading) return <p>Loading heatmap...</p>;
-  if (error) return <p className="text-red-600">{error}</p>;
+  if (error) return <p className="text-red-600 dark:text-red-400">{error}</p>;
 
   return (
-    <div className="p-4 bg-white rounded shadow max-w-[700px] scale-[0.9] origin-top-left">
+    <div className="p-4 rounded-xl shadow border bg-white text-black dark:bg-zinc-900 dark:text-white max-w-[720px] scale-95 origin-top-left overflow-x-auto">
       <h3 className="text-lg font-semibold mb-4">Metric Activity for Client #{clientId}</h3>
       <CalendarHeatmap
         startDate={startDate}
         endDate={endDate}
         values={heatmapData}
         classForValue={(value) => {
-          if (!value) return 'color-empty';
+          if (!value) return 'color-github-0';
           return `color-github-${Math.min(value.count, 4)}`;
         }}
-        tooltipDataAttrs={(value): { [key: string]: string } => ({
-          'data-tip': value?.date ? `Metric recorded on ${value.date}` : '',
-        })}
+        tooltipDataAttrs={(value) => {
+          return { 'data-tip': value && value.date ? `Metric recorded on ${value.date}` : '' } as { [key: string]: string };
+        }}
         showWeekdayLabels
       />
+
+      {/* Optional Tooltip Lib like react-tooltip could be added here */}
     </div>
   );
 }

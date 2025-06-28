@@ -106,3 +106,38 @@ body {
   }
 }
 
+
+
+/* Heatmap styles */
+.color-github-0 {
+  fill: #ebedf0;
+}
+.color-github-1 {
+  fill: #c6e48b;
+}
+.color-github-2 {
+  fill: #7bc96f;
+}
+.color-github-3 {
+  fill: #239a3b;
+}
+.color-github-4 {
+  fill: #196127;
+}
+
+/* Dark Mode */
+.dark .color-github-0 {
+  fill: #2e2e2e;
+}
+.dark .color-github-1 {
+  fill: #4b5563;
+}
+.dark .color-github-2 {
+  fill: #10b981;
+}
+.dark .color-github-3 {
+  fill: #059669;
+}
+.dark .color-github-4 {
+  fill: #047857;
+}

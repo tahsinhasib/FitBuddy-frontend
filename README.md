@@ -16,3 +16,4 @@ npm install react-intersection-observer
 npm install react-countup
 npm install @heroicons/react
 npm install @headlessui/react
+npm install @headlessui/react react-hot-toast @hello-pangea/dnd

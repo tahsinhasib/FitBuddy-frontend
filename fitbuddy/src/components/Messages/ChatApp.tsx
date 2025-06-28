@@ -226,12 +226,14 @@ export default function ChatApp() {
     };
 
     return (
-        <div className="flex h-[95vh] bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-xl">
+        <div className="flex h-[95vh] bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-xl transition-colors duration-300">
+
 
             {/* ---------- Sidebar with Search + Conversations ---------- */}
             <div className="w-[30%] bg-white dark:bg-slate-900 p-4 overflow-y-auto border-r border-gray-200 dark:border-slate-700 flex flex-col">
 
-                <h2 className="text-xl font-semibold mb-5 text-gray-800">Conversations</h2>
+                <h2 className="text-xl font-semibold mb-5 text-gray-800 dark:text-white transition-colors">Conversations</h2>
+
 
                 {/* Search input */}
                 <input
@@ -239,13 +241,15 @@ export default function ChatApp() {
                     placeholder="Search users to chat..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="mb-5 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                    className="mb-5 px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-gray-800 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
+
 
                 {/* Show search results if searching */}
                 {searchTerm ? (
                     <div className="flex flex-col gap-3 overflow-y-auto max-h-[60vh]">
-                        {isSearching && <p className="text-gray-600 italic">Searching...</p>}
+                        {isSearching && <p className="text-gray-600 dark:text-gray-400 italic">Searching...</p>
+                        }
                         {!isSearching && searchResults.length === 0 && (
                             <p className="text-gray-600 italic">No users found.</p>
                         )}
@@ -257,7 +261,8 @@ export default function ChatApp() {
                                     onClick={() => handleSelectUser(user.id)}
                                 >
                                     {renderSidebarAvatar(user)}
-                                    <div className="text-gray-800 font-medium">{user.name}</div>
+                                    <div className="text-gray-800 dark:text-white font-medium">{user.name}</div>
+
                                 </div>
                             ))}
                     </div>
@@ -265,7 +270,10 @@ export default function ChatApp() {
                     // Show conversations if not searching
                     <div className="flex-1 overflow-y-auto">
                         {conversations.length === 0 && (
-                            <p className="text-gray-600 italic">No conversations yet.</p>
+                            <p className="text-gray-500 dark:text-gray-400 italic text-center mt-10">
+                                No messages yet. Say hi!
+                            </p>
+
                         )}
                         {conversations.map((conv) => {
                             const unread = unreadCounts[conv.user.id] || 0;
@@ -323,16 +331,21 @@ export default function ChatApp() {
                                 {/* Avatar on the left for received, right for sent */}
                                 {msg.sender.id !== currentUserId && renderChatAvatar(msg.sender, 28)}
 
-                                <div
-                                    className={`rounded-lg p-3 inline-block break-words ${msg.sender.id === currentUserId
-                                            ? 'bg-blue-600 text-white shadow-md'
-                                            : 'bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
-                                        }`}
+                                <div className="flex flex-col items-end max-w-[65%] min-w-[50px]">
+  <div
+    className={`rounded-lg p-3 inline-block break-words ${
+      msg.sender.id === currentUserId
+        ? 'bg-blue-600 text-white shadow-md'
+        : 'bg-gray-200 dark:bg-slate-700 text-gray-900 dark:text-white shadow-sm'
+    }`}
+  >
+    {msg.content}
+  </div>
+  <span className="text-[11px] text-gray-500 dark:text-gray-400 mt-1 pr-1 self-end">
+    {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+  </span>
+</div>
 
-                                    style={{ maxWidth: '65%', minWidth: '50px' }}
-                                >
-                                    {msg.content}
-                                </div>
 
                                 {msg.sender.id === currentUserId && renderChatAvatar(msg.sender, 28)}
                             </div>
@@ -344,15 +357,16 @@ export default function ChatApp() {
                     {/* Send Message Input */}
                     <div className="p-4 border-t border-gray-200 dark:border-slate-700 flex gap-3 bg-white dark:bg-slate-800">
 
+
                         <input
                             type="text"
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                             placeholder="Type your message..."
-                            className="flex-1 border border-gray-300 dark:border-slate-600 rounded-lg px-4 py-3 bg-white dark:bg-slate-900 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-
+                            className="flex-1 border border-gray-300 dark:border-slate-600 rounded-lg px-4 py-3 bg-white dark:bg-slate-900 text-gray-800 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                         />
+
                         <button
                             onClick={handleSend}
                             disabled={!inputText.trim()}
@@ -363,9 +377,10 @@ export default function ChatApp() {
                     </div>
                 </div>
             ) : (
-                <div className="flex-1 flex items-center justify-center bg-white text-gray-400 italic">
+                <div className="flex-1 flex items-center justify-center bg-white dark:bg-slate-800 text-gray-400 dark:text-gray-500 italic transition-colors">
                     Select a conversation to start chatting
                 </div>
+
             )}
         </div>
     );
