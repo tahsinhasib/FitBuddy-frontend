@@ -29,6 +29,7 @@ import UserMetricsModal from '@/components/Dashboard/Modals/UserMetricsModal';
 import AiInsightsPage from '@/components/Ai/AiInsightsPage';
 import AIChatComponent from '@/components/Ai/AiChatComponent';
 import { FaBrain } from 'react-icons/fa';
+import ClientMetricsComparison from '@/components/Trainers/ClientMetricsComparison';
 
 interface User {
   id: number;
@@ -142,6 +143,8 @@ export default function UserDashboard() {
             <TrainerRequestsPanel />
             <br />
             <TrainerClientMetrics />
+            <br />
+            <ClientMetricsComparison />
           </>
         );
       default:

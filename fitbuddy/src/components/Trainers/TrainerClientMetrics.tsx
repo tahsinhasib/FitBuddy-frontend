@@ -68,7 +68,7 @@ export default function AcceptedClientsMetrics() {
   );
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-900 rounded-xl shadow w-full text-gray-900 dark:text-gray-100">
+    <div className="p-6 bg-white dark:bg-slate-800 rounded-xl shadow w-full text-gray-900 dark:text-gray-100">
       <h2 className="text-xl font-bold mb-4">Your Clients Metrics</h2>
 
       <input

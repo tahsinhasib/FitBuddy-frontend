@@ -122,7 +122,7 @@ export default function TrainerRequestsPanel() {
   const totalAcceptedPages = Math.ceil(acceptedClients.length / acceptedItemsPerPage);
 
   return (
-    <div className="p-6 bg-white dark:bg-gray-900 rounded-xl shadow w-full text-gray-900 dark:text-gray-100">
+    <div className="p-6 bg-white dark:bg-slate-800 rounded-xl shadow w-full text-gray-900 dark:text-gray-100">
       <Toaster position="top-right" toastOptions={{ className: 'dark:bg-gray-800 dark:text-white' }} />
 
       <h2 className="text-xl font-bold mb-4 flex items-center justify-between">

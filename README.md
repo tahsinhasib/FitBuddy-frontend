@@ -17,3 +17,5 @@ npm install react-countup
 npm install @heroicons/react
 npm install @headlessui/react
 npm install @headlessui/react react-hot-toast @hello-pangea/dnd
+npm install react-csv
+npm install --save-dev @types/react-csv
