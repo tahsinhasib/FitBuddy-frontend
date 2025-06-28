@@ -15,3 +15,4 @@ npm install --save-dev @types/react-slick
 npm install react-intersection-observer
 npm install react-countup
 npm install @heroicons/react
+npm install @headlessui/react

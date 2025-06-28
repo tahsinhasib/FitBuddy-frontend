@@ -29,6 +29,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import UserProfileCard from '@/components/Profile/UserProfileCard';
 import UserProfilePage from '@/components/Profile/UserProfilePage';
 import UserMetricsForm from '@/components/Dashboard/UserMetricsForm';
+import UserMetricsModal from '@/components/Dashboard/Modals/UserMetricsModal';
 
 interface User {
     id: number;
@@ -42,6 +43,8 @@ export default function UserDashboard() {
     const [activeTab, setActiveTab] = useState<string>('dashboard');
     const [user, setUser] = useState<User | null>(null);
     const router = useRouter();
+
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -73,28 +76,29 @@ export default function UserDashboard() {
         switch (activeTab) {
             case 'dashboard':
                 return (
-                    <div className="space-y-8">
-                        <UserMetricsForm />
-                        <UserMetricsDashboard />
+  <div className="space-y-8">
+    <div className="flex justify-end">
+      <button
+        onClick={() => setModalOpen(true)}
+        className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700"
+      >
+        Add Metrics
+      </button>
+    </div>
+    <UserMetricsModal isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
+    <UserMetricsDashboard />
+    <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex-1">
+        <MetricsChartTabs />
+      </div>
+      <div className="w-full md:max-w-sm">
+        <MetricChangesCard />
+      </div>
+    </div>
+    <UserMetricsHeatmap />
+  </div>
+);
 
-
-                        {/* <MetricsChartTabs />
-      <MetricChangesCard /> */}
-
-                        <div className="flex flex-col md:flex-row gap-6">
-                            {/* Left side: Charts */}
-                            <div className="flex-1">
-                                <MetricsChartTabs />
-                            </div>
-
-                            {/* Right side: Metric changes */}
-                            <div className="w-full md:max-w-sm">
-                                <MetricChangesCard />
-                            </div>
-                        </div>
-                        <UserMetricsHeatmap />
-                    </div>
-                );
             case 'profile':
                 return (
                     <UserProfilePage />
