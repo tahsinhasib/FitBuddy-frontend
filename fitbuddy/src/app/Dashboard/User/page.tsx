@@ -32,6 +32,7 @@ import UserMetricsForm from '@/components/Dashboard/UserMetricsForm';
 import UserMetricsModal from '@/components/Dashboard/Modals/UserMetricsModal';
 import HealthInsightCard from '@/components/Ai/HealthInsightCard';
 import AiInsightsPage from '@/components/Ai/AiInsightsPage';
+import AIChatComponent from '@/components/Ai/AiChatComponent';
 
 interface User {
     id: number;
@@ -130,7 +131,10 @@ export default function UserDashboard() {
 
             case 'ai':
                 return (
+                    <>
                     <AiInsightsPage />
+                    <AIChatComponent />
+                    </>
                 );
             case 'user':
                 return (
