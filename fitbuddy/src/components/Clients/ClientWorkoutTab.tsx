@@ -50,7 +50,7 @@ export default function ClientWorkoutTab() {
   }, []);
 
   return (
-    <div className="p-6 space-y-6 bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300">
+    <div className="p-6 space-y-6 rounded-xl bg-gray-50 dark:bg-slate-900 min-h-screen transition-colors duration-300">
       <h2 className="text-2xl font-bold text-gray-800 dark:text-white">My Fitness Dashboard</h2>
 
       {/* 🔲 Row: Heatmap + Calendar */}

@@ -95,8 +95,8 @@ export default function MetricChangesCard() {
     ];
 
     return (
-        <div className="bg-white dark:bg-slate-900 shadow-md dark:shadow-slate-800 rounded-2xl p-6 w-full">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-yellow-400 mb-4">Metric Changes</h2>
+        <div className="bg-white shadow-md border border-gray-200 dark:bg-slate-900 dark:border-slate-700 rounded-2xl p-6 w-full">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Metric Changes</h2>
             <div className="divide-y divide-gray-200 dark:divide-slate-700">
                 {metrics.map(({ label, icon, field, unit }) => {
                     const latestVal = Number(latest?.[field as keyof Metric] ?? 0);

@@ -164,7 +164,7 @@ export default function MetricsChartTabs() {
     const currentConfig = metricConfig[activeTab];
 
     return (
-        <div className="bg-white dark:bg-slate-900 rounded-xl shadow p-6 w-full">
+        <div className="bg-white shadow-md border border-gray-200 dark:bg-slate-900 dark:border-slate-700 rounded-xl p-6 w-full">
             <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-4 flex items-center justify-between">
                 Your Metrics Over Time
                 <button
@@ -193,7 +193,7 @@ export default function MetricsChartTabs() {
             </div>
 
             {/* Chart */}
-            <div className="w-full bg-white dark:bg-slate-900 p-4 rounded-lg shadow-inner">
+            <div className="w-full bg-white dark:bg-slate-900 p-4  rounded-lg shadow-inner">
                 {metrics.length > 0 &&
                     (() => {
                         const data = formatData(activeTab, currentConfig.label, currentConfig.color);

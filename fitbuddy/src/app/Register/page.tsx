@@ -32,7 +32,7 @@ export default function RegisterPage() {
         try {
             await axios.post('http://localhost:3000/auth/register', form);
             setSuccess('Registration successful! Redirecting...');
-            setTimeout(() => router.push('/login'), 2000);
+            setTimeout(() => router.push('/Login'), 2000);
         } catch (err: any) {
             setError(err.response?.data?.message || 'Something went wrong');
         }

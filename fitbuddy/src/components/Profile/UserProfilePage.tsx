@@ -39,7 +39,7 @@ export default function UserProfilePage() {
     if (!user) return <div className="p-8 text-red-500">User not found.</div>;
 
     return (
-        <div className="p-4">
+        <div className="p-4 shadow-md border rounded-xl border-gray-200 dark:border-slate-700">
             <UserProfileCard user={user} />
         </div>
     );
