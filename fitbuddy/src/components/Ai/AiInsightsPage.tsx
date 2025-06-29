@@ -16,10 +16,10 @@ export default function AiInsightsPage() {
 
             try {
                 const res = await axios.get('http://localhost:3000/user-metrics', {
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
 
 
                 setMetrics(res.data); // you may sort/get latest if needed

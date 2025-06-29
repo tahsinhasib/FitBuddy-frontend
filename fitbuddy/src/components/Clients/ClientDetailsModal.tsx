@@ -74,51 +74,51 @@ export default function ClientDetailsModal({ isOpen, onClose, clientId, token }:
                     <>
                         <h2 className="text-xl font-bold mb-4 text-center">Client Profile</h2>
 
-<div className="flex items-center space-x-4 mb-6">
-  {client?.profilePicture ? (
-    <img
-      src={client.profilePicture}
-      alt="Profile"
-      className="w-16 h-16 rounded-full object-cover shadow"
-    />
-  ) : (
-    <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-xl font-semibold text-white shadow">
-      {client?.name?.[0] || '?'}
-    </div>
-  )}
-  <div>
-    <p className="text-lg font-semibold">{client?.name || 'N/A'}</p>
-    <p className="text-sm text-gray-600">{client?.email || 'N/A'}</p>
-  </div>
-</div>
+                        <div className="flex items-center space-x-4 mb-6">
+                            {client?.profilePicture ? (
+                                <img
+                                    src={client.profilePicture}
+                                    alt="Profile"
+                                    className="w-16 h-16 rounded-full object-cover shadow"
+                                />
+                            ) : (
+                                <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center text-xl font-semibold text-white shadow">
+                                    {client?.name?.[0] || '?'}
+                                </div>
+                            )}
+                            <div>
+                                <p className="text-lg font-semibold">{client?.name || 'N/A'}</p>
+                                <p className="text-sm text-gray-600">{client?.email || 'N/A'}</p>
+                            </div>
+                        </div>
 
-<div className="grid grid-cols-1 gap-3 text-sm">
-  <div>
-    <strong className="text-gray-600">Phone:</strong> {client?.phone || 'N/A'}
-  </div>
-  <div>
-    <strong className="text-gray-600">Gender:</strong> {client?.gender || 'N/A'}
-  </div>
-  <div>
-    <strong className="text-gray-600">Bio:</strong> {client?.bio || 'N/A'}
-  </div>
-  <div>
-    <strong className="text-gray-600">Location:</strong> {client?.location || 'N/A'}
-  </div>
-  <div>
-    <strong className="text-gray-600">Date of Birth:</strong>{' '}
-    {client?.dateOfBirth ? new Date(client.dateOfBirth).toLocaleDateString() : 'N/A'}
-  </div>
+                        <div className="grid grid-cols-1 gap-3 text-sm">
+                            <div>
+                                <strong className="text-gray-600">Phone:</strong> {client?.phone || 'N/A'}
+                            </div>
+                            <div>
+                                <strong className="text-gray-600">Gender:</strong> {client?.gender || 'N/A'}
+                            </div>
+                            <div>
+                                <strong className="text-gray-600">Bio:</strong> {client?.bio || 'N/A'}
+                            </div>
+                            <div>
+                                <strong className="text-gray-600">Location:</strong> {client?.location || 'N/A'}
+                            </div>
+                            <div>
+                                <strong className="text-gray-600">Date of Birth:</strong>{' '}
+                                {client?.dateOfBirth ? new Date(client.dateOfBirth).toLocaleDateString() : 'N/A'}
+                            </div>
 
-  <div>
-    <strong className="text-gray-600">Social Links:</strong>
-    <ul className="list-disc ml-5">
-      <li>Facebook: {client?.socialLinks?.facebook || 'N/A'}</li>
-      <li>Twitter: {client?.socialLinks?.twitter || 'N/A'}</li>
-      <li>LinkedIn: {client?.socialLinks?.linkedin || 'N/A'}</li>
-    </ul>
-  </div>
-</div>
+                            <div>
+                                <strong className="text-gray-600">Social Links:</strong>
+                                <ul className="list-disc ml-5">
+                                    <li>Facebook: {client?.socialLinks?.facebook || 'N/A'}</li>
+                                    <li>Twitter: {client?.socialLinks?.twitter || 'N/A'}</li>
+                                    <li>LinkedIn: {client?.socialLinks?.linkedin || 'N/A'}</li>
+                                </ul>
+                            </div>
+                        </div>
 
 
                     </>
